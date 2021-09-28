@@ -23,9 +23,11 @@ public class Server {
 
             outputStream = new ObjectOutputStream(clientSocket.getOutputStream());
             inputStream = new ObjectInputStream(clientSocket.getInputStream());
-            Message messageObject = (Message) inputStream.readObject();
-            System.out.println("New message received.");
-            System.out.println("[" + messageObject.senderName + "] " + messageObject.messageContent);
+            while(clientSocket.isConnected())
+            {
+                Message messageObject = (Message) inputStream.readObject();
+                System.out.println("[" + messageObject.senderName + "] " + messageObject.messageContent);
+            }
 
         } catch (IOException e) {
             e.printStackTrace();
